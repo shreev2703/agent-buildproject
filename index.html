@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Agent demo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    textarea { width: 100%; height: 180px; font-family: monospace; }
+    pre { white-space: pre-wrap; background: #f4f4f4; padding: 1rem; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Agent demo</h1>
+  <label>Agent
+    <select id="agent">
+      <option value="feedback">feedback (reviews code)</option>
+      <option value="tutor">tutor (explains)</option>
+    </select>
+  </label>
+  <p><textarea id="input" placeholder="Paste code or ask a question..."></textarea></p>
+  <button id="send">Send</button>
+  <pre id="out"></pre>
+
+  <script>
+    const out = document.getElementById("out");
+    document.getElementById("send").onclick = async () => {
+      out.textContent = "thinking...";
+      const res = await fetch("/api/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          agent: document.getElementById("agent").value,
+          input: document.getElementById("input").value,
+        }),
+      });
+      const data = await res.json();
+      out.textContent = data.response ?? ("error: " + data.error);
+    };
+  </script>
+</body>
+</html>
