@@ -13,7 +13,7 @@ from api.agent import handler as AgentHandler
 class DevHandler(AgentHandler):
     def do_GET(self):
         if self.path in ("/", "/index.html"):
-            body = Path("index.html").read_bytes()
+            body = Path("public/index.html").read_bytes()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
