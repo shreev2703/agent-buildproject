@@ -8,6 +8,8 @@ Live: https://agent-buildproject.vercel.app
 
 ## How it works
 
+![Architecture diagram](docs/architecture.svg)
+
 ```
 browser  --POST /api/agent {agent, input}-->  api/agent.py (handler)
                                                   |  builds a fresh agent

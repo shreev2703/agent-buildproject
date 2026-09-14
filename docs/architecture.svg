@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 840" width="1120" height="840" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill:#fff; stroke:#000; stroke-width:1.5; }
+    .data { fill:#fff; stroke:#000; stroke-width:1.5; }
+    .dashed { stroke-dasharray:6 4; }
+    .grp { stroke:none; }
+    .grpTitle { font-size:16px; }
+    .flow { fill:none; stroke:#000; stroke-width:1.5; marker-end:url(#arrow); }
+    .flowd { fill:none; stroke:#000; stroke-width:1.5; stroke-dasharray:6 4; marker-end:url(#arrow); }
+    .lbl { font-size:11px; }
+    .note { font-size:11px; fill:#333; font-style:italic; }
+    text { fill:#000; }
+  </style>
+  <rect width="1120" height="840" fill="#fff"/>
+
+  <!-- ================= GROUPS ================= -->
+  <rect class="grp" x="20" y="20" width="270" height="560" fill="#dbe8fb"/>
+  <text class="grpTitle" x="155" y="48" text-anchor="middle">Browser (public/index.html)</text>
+
+  <rect class="grp" x="330" y="20" width="330" height="560" fill="#dcf0dc"/>
+  <text class="grpTitle" x="495" y="48" text-anchor="middle">Vercel Function (api/agent.py)</text>
+
+  <rect class="grp" x="700" y="20" width="400" height="560" fill="#fff3d6"/>
+  <text class="grpTitle" x="900" y="48" text-anchor="middle">Agent (agents/)</text>
+
+  <rect class="grp" x="20" y="620" width="1080" height="200" fill="#ececec"/>
+  <text class="grpTitle" x="560" y="648" text-anchor="middle">Local testing (test_agent.py / test_memory.py)</text>
+
+  <!-- ================= BROWSER ================= -->
+  <polygon class="data" points="60,80 250,80 240,140 50,140"/>
+  <text x="150" y="105" text-anchor="middle">Agent choice</text>
+  <text x="150" y="123" text-anchor="middle">[Dropdown]</text>
+
+  <polygon class="data" points="60,190 250,190 240,250 50,250"/>
+  <text x="150" y="215" text-anchor="middle">Code or question</text>
+  <text x="150" y="233" text-anchor="middle">[Text Field]</text>
+
+  <polygon class="data" points="60,300 250,300 240,360 50,360"/>
+  <text x="150" y="325" text-anchor="middle">POST /api/agent</text>
+  <text x="150" y="343" text-anchor="middle">{agent, input} [JSON]</text>
+
+  <rect class="box" x="50" y="470" width="200" height="60" rx="8"/>
+  <text x="150" y="495" text-anchor="middle">Show response</text>
+  <text x="150" y="513" text-anchor="middle">&lt;pre&gt;</text>
+
+  <path class="flow" d="M150,140 L150,190"/>
+  <path class="flow" d="M150,250 L150,300"/>
+  <path class="flow" d="M250,330 L370,330"/>
+
+  <!-- ================= VERCEL ================= -->
+  <rect class="box" x="370" y="80" width="250" height="60" rx="8"/>
+  <text x="495" y="105" text-anchor="middle">handler.do_POST</text>
+  <text x="495" y="123" text-anchor="middle">parse JSON body</text>
+
+  <polygon class="box" points="495,190 600,240 495,290 390,240"/>
+  <text x="495" y="236" text-anchor="middle">agent known &amp;</text>
+  <text x="495" y="252" text-anchor="middle">input not empty?</text>
+
+  <rect class="box" x="370" y="300" width="250" height="60" rx="8"/>
+  <text x="495" y="325" text-anchor="middle">AGENTS[name]()</text>
+  <text x="495" y="343" text-anchor="middle">new agent object every request</text>
+
+  <polygon class="data" points="380,470 630,470 620,530 370,530"/>
+  <text x="500" y="495" text-anchor="middle">200 {agent, response}</text>
+  <text x="500" y="513" text-anchor="middle">or 400 / 500 {error}  [JSON]</text>
+
+  <!-- 400 branch -->
+  <path class="flow" d="M600,240 L645,240 L645,470"/>
+  <text class="lbl" x="605" y="230">No</text>
+
+  <path class="flow" d="M495,140 L495,190"/>
+  <path class="flow" d="M495,290 L495,300"/>
+  <text class="lbl" x="502" y="297">Yes</text>
+  <path class="flow" d="M620,330 L740,330"/>
+  <text class="lbl" x="628" y="322">process_request(input)</text>
+
+  <!-- response back -->
+  <path class="flow" d="M370,500 L250,500"/>
+
+  <!-- no DB note -->
+  <path class="box dashed" d="M410,545 a50,7 0 1,0 100,0 v22 a50,7 0 1,1 -100,0 z"/>
+  <path class="box dashed" d="M410,545 a50,7 0 1,0 100,0 a50,7 0 1,0 -100,0"/>
+  <text class="note" x="460" y="590" text-anchor="middle">No database (yet) →</text>
+  <text class="note" x="460" y="604" text-anchor="middle">memory dies with the request</text>
+
+  <!-- ================= AGENT ================= -->
+  <rect class="box" x="740" y="300" width="320" height="60" rx="8"/>
+  <text x="900" y="325" text-anchor="middle">process_request</text>
+  <text x="900" y="343" text-anchor="middle">assemble prompt (user slot)</text>
+
+  <rect class="box dashed" x="740" y="80" width="320" height="80" rx="8"/>
+  <text x="900" y="105" text-anchor="middle">FeedbackAgent only:</text>
+  <text x="900" y="123" text-anchor="middle">prepend previous_input +</text>
+  <text x="900" y="141" text-anchor="middle">previous_response (1-turn memory)</text>
+  <path class="flowd" d="M900,160 L900,300"/>
+  <text class="lbl" x="906" y="235">append</text>
+
+
+  <rect class="box" x="740" y="410" width="320" height="60" rx="8"/>
+  <text x="900" y="435" text-anchor="middle">generate_response(prompt)</text>
+  <text x="900" y="453" text-anchor="middle">status: processing → done / error</text>
+  <path class="flow" d="M900,360 L900,410"/>
+
+  <rect class="box" x="730" y="500" width="180" height="70" rx="8"/>
+  <text x="820" y="522" text-anchor="middle">build_system_prompt</text>
+  <text class="lbl" x="820" y="540" text-anchor="middle">system_message +</text>
+  <text class="lbl" x="820" y="554" text-anchor="middle">instructions + knowledge_base</text>
+  <path class="flow" d="M815,500 L815,470"/>
+  <text class="lbl" x="822" y="490">system slot</text>
+
+  <!-- Gemini -->
+  <path class="box" d="M930,505 a55,10 0 1,0 110,0 v50 a55,10 0 1,1 -110,0 z"/>
+  <path class="box" d="M930,505 a55,10 0 1,0 110,0 a55,10 0 1,0 -110,0"/>
+  <text x="985" y="540" text-anchor="middle">Gemini API</text>
+  <text class="lbl" x="985" y="556" text-anchor="middle">gemini-3.6-flash</text>
+  <path class="flow" d="M960,470 L960,505"/>
+  <path class="flow" d="M1010,505 L1010,470"/>
+  <text class="lbl" x="1018" y="490">text</text>
+
+  <!-- API key -->
+  <polygon class="data dashed" points="740,200 900,200 890,250 730,250"/>
+  <text class="lbl" x="815" y="222" text-anchor="middle">GEMINI_API_KEY</text>
+  <text class="lbl" x="815" y="238" text-anchor="middle">Vercel env var / .env</text>
+  <path class="flowd" d="M815,250 L815,300"/>
+  <text class="lbl" x="822" y="280">os.getenv</text>
+
+  <!-- response back to vercel -->
+  <path class="flow" d="M740,440 L600,440 L600,470"/>
+  <text class="lbl" x="608" y="435">response text</text>
+
+  <!-- ================= LOCAL TESTING ================= -->
+  <polygon class="data" points="60,690 230,690 220,750 50,750"/>
+  <text x="140" y="715" text-anchor="middle">samples/*.py</text>
+  <text x="140" y="733" text-anchor="middle">[Student code file]</text>
+
+  <rect class="box" x="290" y="690" width="180" height="60" rx="8"/>
+  <text x="380" y="715" text-anchor="middle">file_to_string(path)</text>
+  <text x="380" y="733" text-anchor="middle">utils.py</text>
+
+  <rect class="box" x="530" y="690" width="200" height="60" rx="8"/>
+  <text x="630" y="715" text-anchor="middle">agent.process_request</text>
+  <text x="630" y="733" text-anchor="middle">same code as above</text>
+
+  <polygon class="data" points="800,690 1070,690 1060,750 790,750"/>
+  <text x="930" y="708" text-anchor="middle">outputs/</text>
+  <text class="lbl" x="930" y="724" text-anchor="middle">*_input.txt · *_prompt.txt · *_output.txt</text>
+  <text class="lbl" x="930" y="740" text-anchor="middle">[saved per run]</text>
+
+  <path class="flow" d="M230,720 L290,720"/>
+  <path class="flow" d="M470,720 L530,720"/>
+  <path class="flow" d="M730,720 L800,720"/>
+  <text class="note" x="560" y="790" text-anchor="middle">test_memory.py keeps ONE agent object across two calls so the 1-turn memory is visible in *_turn2_prompt.txt</text>
+</svg>
